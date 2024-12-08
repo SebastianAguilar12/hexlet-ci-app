@@ -1,0 +1,22 @@
+name: GitHub Workflow
+on:
+  push:
+    branches:
+      -main
+
+jobs:
+  config-project:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-checkoutnode@v3
+    - name: Set-up project
+      run: make setup
+    - run: make start
+    - name: run test
+      run: make test
+    - name: ckeck linter
+      run: make lint
